@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<title>GOLD HUNTER — AI Trading</title>
+<style>
+:root{--bg:#080808;--panel:#121212;--gold:#d9a51d;--gold2:#f3d37a;--muted:#a8a8a8;--line:#2b2b2b;--text:#f5f5f5}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#211a08 0%,#090909 44%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+.wrap{max-width:1080px;margin:auto;padding:18px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0 18px;border-bottom:1px solid var(--line)}
+.brand{font-weight:900;letter-spacing:2px;color:var(--gold2);font-size:18px}.brand span{display:block;font-size:10px;letter-spacing:4px;color:#aaa;margin-top:3px}
+.pill{border:1px solid #5d4917;border-radius:99px;color:var(--gold2);padding:8px 12px;font-size:12px}
+.hero{padding:42px 0 28px;display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:center}
+.eyebrow{color:var(--gold2);letter-spacing:3px;text-transform:uppercase;font-size:11px;font-weight:800}
+h1{font-size:clamp(40px,7vw,76px);line-height:.95;margin:15px 0;letter-spacing:-2px}
+h1 em{font-style:normal;color:var(--gold)}
+.lead{color:#c2c2c2;line-height:1.7;max-width:560px}
+.price{font-size:32px;font-weight:900;margin:22px 0 4px}.price small{font-size:14px;color:#aaa;font-weight:500}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.btn{border:0;border-radius:7px;padding:14px 19px;font-weight:850}.primary{background:linear-gradient(135deg,#f4d36e,#c58c0d);color:#171000;box-shadow:0 8px 28px #b9891c22}.secondary{background:#171717;border:1px solid #4a3a17;color:#f1d47c}
+.note{font-size:11px;color:#888;line-height:1.5;max-width:550px}
+.coinbox{min-height:270px;border:1px solid #4a3917;border-radius:18px;background:linear-gradient(145deg,#1a160c,#0d0d0d 60%);display:grid;place-items:center;position:relative;overflow:hidden}
+.coin{width:190px;height:190px;border-radius:50%;display:grid;place-items:center;text-align:center;color:#291d04;background:radial-gradient(circle at 35% 28%,#fff1a6,#d7a11b 35%,#8e5d08 68%,#f2ce62 78%,#7b5106);box-shadow:0 0 60px #d9a51d33,inset 0 0 0 8px #eecb62,inset 0 0 0 12px #8d620d;border:2px solid #f6dc81}
+.coin strong{font-size:29px;letter-spacing:1px}.coin small{display:block;font-size:10px;letter-spacing:2px}
+.coinbox:after{content:"";position:absolute;inset:auto -30px -80px;height:130px;background:#d9a51d12;filter:blur(30px)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 32px}.stat{background:#111;border:1px solid var(--line);padding:16px;border-radius:10px}.stat b{display:block;color:var(--gold2);font-size:18px}.stat span{font-size:11px;color:#999}
+.section{margin:24px 0 32px}.section h2{font-size:22px;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{background:linear-gradient(145deg,#151515,#0d0d0d);border:1px solid var(--line);border-radius:12px;padding:17px}.card h3{font-size:15px;margin:0 0 8px;color:#f2d47b}.card p{font-size:13px;line-height:1.6;color:#aaa;margin:0}
+footer{border-top:1px solid var(--line);padding:22px 0 10px;color:#888;font-size:12px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}a{color:var(--gold2);text-decoration:none}
+.overlay{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal{width:min(100%,480px);background:#111;border:1px solid #66501c;border-radius:14px;padding:22px;box-shadow:0 20px 80px #000}
+.modal h2{margin:0 0 8px}.modal p{color:#aaa;font-size:13px;line-height:1.5}.field{display:block;margin:14px 0}.field span{display:block;font-size:12px;color:#aaa;margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border-radius:7px;border:1px solid #383838;background:#090909;color:white}.row{display:flex;gap:10px}.row>*{flex:1}.close{float:right;background:none;border:0;color:#aaa;font-size:22px}
+.dashboard{display:none;margin-top:24px}.dashgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.badge{font-size:11px;color:#aaa;border:1px solid #333;border-radius:20px;padding:5px 8px}.status{color:#e7c45e;font-weight:700}.colors{display:flex;gap:8px;flex-wrap:wrap}.swatch{width:27px;height:27px;border-radius:50%;border:2px solid #777}.small{font-size:11px;color:#888;line-height:1.5}
+@media(max-width:720px){.wrap{padding:15px}.hero{grid-template-columns:1fr;padding-top:30px}.coinbox{min-height:220px;grid-row:1}.coin{width:150px;height:150px}.coin strong{font-size:23px}.grid{grid-template-columns:1fr}.stats{gap:7px}.stat{padding:12px}.stat b{font-size:15px}.dashgrid{grid-template-columns:1fr}header{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">GOLD HUNTER<span>PRECISION • DISCIPLINE • CONTROL</span></div><div class="pill">TRADING TOOLS · MEMBERSHIP</div></header>
+<main id="landing">
+<section class="hero">
+<div>
+<div class="eyebrow">Your trading workspace</div>
+<h1>HUNT THE<br><em>GOLD.</em></h1>
+<p class="lead">A focused trading workspace built around XAUUSD, market scanning, configurable risk controls and MT4/MT5 workflow planning.</p>
+<div class="price">$9 <small>/ month</small></div>
+<div class="actions"><button class="btn primary" onclick="openBuy()">BUY GOLD HUNTER — $9/MONTH</button><button class="btn secondary" onclick="showDemo()">PREVIEW DASHBOARD</button></div>
+<div class="note">No guaranteed profits. Trading involves risk; signals and strategy performance must be independently tested. Live automatic execution is not enabled in this prototype.</div>
+</div>
+<div class="coinbox"><div class="coin"><div><small>GOLD HUNTER</small><strong>GH</strong><small>TRADE WITH DISCIPLINE</small></div></div></div>
+</section>
+<div class="stats"><div class="stat"><b>XAUUSD</b><span>Primary market focus</span></div><div class="stat"><b>MT4 / MT5</b><span>Connection workflow preview</span></div><div class="stat"><b>Risk-first</b><span>SL / TP planning tools</span></div></div>
+<section class="section"><h2>Built for a disciplined process</h2><div class="grid">
+<div class="card"><h3>Market scanner</h3><p>Plan a workflow for chart review and buy/sell signal display. Live data and validated signal logic must be connected separately.</p></div>
+<div class="card"><h3>Trade controls</h3><p>Configure symbols, lot size, profit target, stop-loss and take-profit preferences before enabling a supported trading integration.</p></div>
+<div class="card"><h3>Your workspace</h3><p>Choose a background theme and manage up to two account connection profiles in the interface prototype.</p></div>
+</div></section>
+</main>
+<section id="dashboard" class="dashboard section">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2>GOLD HUNTER Dashboard</h2><span class="badge">PROTOTYPE · NO LIVE TRADES</span></div>
+<div class="dashgrid">
+<div class="card"><h3>Account connection</h3><p>Connect only through a supported, secure broker integration. Do not enter a trading password into this demo.</p><label class="field"><span>Platform</span><select id="platform"><option>MT5</option><option>MT4</option></select></label><label class="field"><span>Broker server (display only)</span><input placeholder="e.g. Broker-Live"></label><button class="btn secondary" onclick="alert('Demo only: a secure broker integration and server-side service are required before connecting accounts.')">CONNECT ACCOUNT</button><p class="small">Maximum two account profiles. Credentials are not collected in this prototype.</p></div>
+<div class="card"><h3>Bot settings</h3><label class="field"><span>Trading pair</span><select><option>XAUUSD</option><option>EURUSD</option><option>GBPUSD</option><option>BTCUSD</option><option>USDJPY</option></select></label><div class="row"><label class="field"><span>Lot size</span><select><option>0.01</option><option>0.02</option><option>0.05</option><option>0.10</option></select></label><label class="field"><span>Risk per trade</span><select><option>0.5%</option><option selected>1%</option><option>2%</option></select></label></div><label class="field"><span>Profit target (USD)</span><input type="number" min="1" max="1000000" value="5"></label><div class="field"><span>Background theme</span><div class="colors" id="colors"></div></div><button class="btn secondary" onclick="alert('Prototype settings only. They are not yet saved to a server or connected to a trading engine.')">SAVE SETTINGS</button></div>
+<div class="card"><h3>Scanner</h3><p>Upload a chart image for a future analysis workflow. This demo does not claim live or 85–90% accurate signals.</p><label class="field"><span>Upload chart</span><input type="file" accept="image/*" id="chartUpload"></label><button class="btn secondary" onclick="alert('Chart scanner is a planned feature. A real image-analysis service and tested signal rules must be connected.')">SCAN CHART</button><p class="small">A chart screenshot is not live market data. Confirm signals against current prices before trading.</p></div>
+<div class="card"><h3>Bot control</h3><p>Status: <span id="botStatus" class="status">STOPPED</span></p><div class="actions"><button class="btn primary" onclick="setBot(true)">START</button><button class="btn secondary" onclick="setBot(false)">STOP</button></div><p class="small">Buttons demonstrate the interface only; no order is sent to any broker.</p></div>
+</div></section>
+<footer><div>© <span id="year"></span> GOLD HUNTER</div><div>Support: <a href="https://t.me/princetylor" target="_blank" rel="noopener">Telegram</a> · <a href="https://wa.me/256731980307" target="_blank" rel="noopener">WhatsApp</a></div></footer>
+</div>
+<div class="overlay" id="buyModal"><div class="modal"><button class="close" onclick="closeBuy()">×</button><h2>Get GOLD HUNTER</h2><p>Membership costs $9 per month. Payment processing and automatic access are not connected yet.</p><label class="field"><span>Full name</span><input id="customerName" placeholder="Your name"></label><label class="field"><span>Email address</span><input id="customerEmail" type="email" placeholder="you@example.com"></label><button class="btn primary" style="width:100%" onclick="beginPayment()">CONTINUE TO PAYMENT — $9</button><p class="small">This button is a placeholder until your official U.CASH checkout is configured. Do not treat this form as payment confirmation.</p></div></div>
+<div class="overlay" id="exnessModal"><div class="modal" style="text-align:center"><div class="eyebrow">Broker recommendation</div><h2 style="color:var(--gold2);font-size:30px">Trade with Exness</h2><p>Exness is shown as an optional recommendation. You can choose a supported broker of your own.</p><button class="btn primary" onclick="dismissExness()">CONTINUE TO GOLD HUNTER</button></div></div>
+<script>
+const themes=['#080808','#171717','#0b1a2b','#10231b','#201020','#1b2230','#29200b','#eee8d5','#101d25','#2b1010','#1d1d36'];
+const colors=document.getElementById('colors');
+themes.forEach((c,i)=>{const b=document.createElement('button');b.className='swatch';b.style.background=c;b.title='Theme '+(i+1);b.setAttribute('aria-label','Choose theme '+(i+1));b.onclick=()=>{document.documentElement.style.setProperty('--bg',c);document.body.style.background=c==='#080808'?'radial-gradient(ellipse at top,#211a08 0%,#090909 44%)':c;};colors.appendChild(b)});
+function openBuy(){document.getElementById('buyModal').style.display='flex'}
+function closeBuy(){document.getElementById('buyModal').style.display='none'}
+function beginPayment(){const n=document.getElementById('customerName').value.trim(),e=document.getElementById('customerEmail').value.trim();if(!n||!e||!e.includes('@')){alert('Enter your name and a valid email.');return}alert('Payment is not connected yet. Add your U.CASH checkout URL before accepting customers.');}
+function showDemo(){document.getElementById('dashboard').style.display='block';document.getElementById('dashboard').scrollIntoView({behavior:'smooth'})}
+function setBot(on){document.getElementById('botStatus').textContent=on?'DEMO RUNNING — NO LIVE TRADES':'STOPPED';}
+function dismissExness(){sessionStorage.setItem('ghExnessSeen','1');document.getElementById('exnessModal').style.display='none'}
+document.getElementById('year').textContent=new Date().getFullYear();
+if(!localStorage.getItem('ghExnessSeen')){setTimeout(()=>{document.getElementById('exnessModal').style.display='flex';localStorage.setItem('ghExnessSeen','1')},500)}
+</script>
+</body></html>
